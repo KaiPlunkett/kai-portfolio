@@ -14,6 +14,18 @@ filters.forEach(button => button.addEventListener('click', () => {
 }));
 
 
+
+// Only one portfolio audio preview may play at a time.
+// The play event doesn't bubble, so listen in the capture phase; this also
+// covers audio players added to the page later. Works with native Safari controls.
+document.addEventListener('play', (event) => {
+  const activeAudio = event.target;
+  if (!(activeAudio instanceof HTMLAudioElement)) return;
+  document.querySelectorAll('audio').forEach(otherAudio => {
+    if (otherAudio !== activeAudio && !otherAudio.paused) otherAudio.pause();
+  });
+}, true);
+
 // The trigger is deliberately a button (not an external link), preventing Safari
 // from navigating to GitHub if its native <dialog> support differs.
 // The current public README is fetched whenever the overlay opens.

@@ -132,3 +132,12 @@ Removed **Voices cutting through static** from the portfolio showcase (the origi
 4. Box dropping
 
 Track numbers are consecutively `01`–`04`, and both pages reference stylesheet and JavaScript `?v=10` for cache refresh. All V9 improvements are retained. The five-sample selection above under V9 is historical context, not the current displayed selection.
+
+## V11: exclusive audio playback
+
+- Starting one audio preview automatically pauses any other currently playing `<audio>` preview on the page. This applies across **both Music and Sound Effects** panels, not just within a panel.
+- Uses native HTML media `play` events in the capture phase, so the existing browser audio controls and seek behavior are unchanged, including in Safari on macOS and iPhone.
+- Paused tracks keep their positions and can be resumed; no automatic restart or autoplay is introduced.
+- Both HTML pages reference `?v=11` for CSS and JavaScript to avoid stale Safari caching. All V10 visuals, modal behavior, audio selection and responsive fixes are retained.
+
+After deployment, test: play Song 1, then Song 2, then Footsteps, then Heartbeat. Only the latest track should keep playing. Repeat on Mac Safari and iPhone Safari.
