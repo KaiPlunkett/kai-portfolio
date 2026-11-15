@@ -14,9 +14,11 @@ filters.forEach(button => button.addEventListener('click', () => {
 }));
 
 
-// Progressive enhancement: with JavaScript disabled, the link still opens GitHub.
-// Fetch the current public Markdown directly from GitHub each time the modal opens.
+// The trigger is deliberately a button (not an external link), preventing Safari
+// from navigating to GitHub if its native <dialog> support differs.
+// The current public README is fetched whenever the overlay opens.
 const statementTrigger = document.getElementById('personal-statement-trigger');
+const statementOverlay = document.getElementById('personal-statement-overlay');
 const statementDialog = document.getElementById('personal-statement-dialog');
 const statementClose = document.getElementById('personal-statement-close');
 const statementContent = document.getElementById('statement-content');
@@ -111,29 +113,100 @@ function renderStatementMarkdown(markdown) {
   flushParagraph();
 }
 
-if (statementTrigger && statementDialog && typeof statementDialog.showModal === 'function') {
-  statementTrigger.addEventListener('click', async event => {
-    event.preventDefault();
+// Custom modal avoids relying on Safari's native HTMLDialogElement.showModal().
+// Keeping focus inside the modal makes this usable with a keyboard as well.
+if (statementTrigger && statementOverlay && statementDialog && statementClose && statementContent && statementStatus) {
+  let lastFocusedElement = null;
+  let currentRequest = null;
+
+  function closeStatement() {
+    if (statementOverlay.hidden) return;
+    statementOverlay.hidden = true;
+    document.body.classList.remove('statement-is-open');
+    if (currentRequest) {
+      currentRequest.abort();
+      currentRequest = null;
+    }
+    if (lastFocusedElement && document.contains(lastFocusedElement)) {
+      lastFocusedElement.focus();
+    } else {
+      statementTrigger.focus();
+    }
+  }
+
+  async function fetchStatement(signal) {
+    // GitHub raw content supports CORS. Try the API if it is blocked or fails.
+    try {
+      const response = await fetch(statementSource, { cache: 'no-store', signal });
+      if (!response.ok) throw new Error(`Raw GitHub returned HTTP ${response.status}`);
+      const markdown = await response.text();
+      if (!markdown.trim()) throw new Error('The README is empty');
+      return markdown;
+    } catch (rawError) {
+      if (signal.aborted) throw rawError;
+      const apiUrl = 'https://api.github.com/repos/KaiPlunkett/personal-statement/contents/README.md';
+      const response = await fetch(apiUrl, { cache: 'no-store', signal, headers: { Accept: 'application/vnd.github+json' } });
+      if (!response.ok) throw new Error(`GitHub API returned HTTP ${response.status}`);
+      const file = await response.json();
+      if (!file.content || file.encoding !== 'base64') throw new Error('Unexpected README response');
+      const bytes = Uint8Array.from(atob(file.content.replace(/\s/g, '')), character => character.charCodeAt(0));
+      const markdown = new TextDecoder('utf-8').decode(bytes);
+      if (!markdown.trim()) throw new Error('The README is empty');
+      return markdown;
+    }
+  }
+
+  statementTrigger.addEventListener('click', async () => {
+    if (!statementOverlay.hidden) return;
+    lastFocusedElement = document.activeElement;
     statementContent.replaceChildren();
     statementStatus.textContent = 'Loading the latest personal statement from GitHub…';
     statementStatus.hidden = false;
-    statementDialog.showModal();
+    statementOverlay.hidden = false;
+    document.body.classList.add('statement-is-open');
     statementClose.focus();
+
+    if (currentRequest) currentRequest.abort();
+    const request = new AbortController();
+    currentRequest = request;
     try {
-      const response = await fetch(statementSource, {cache: 'no-store'});
-      if (!response.ok) throw new Error(`GitHub returned HTTP ${response.status}`);
-      const markdown = await response.text();
-      if (!markdown.trim()) throw new Error('The README is empty');
+      const markdown = await fetchStatement(request.signal);
+      if (request.signal.aborted || statementOverlay.hidden) return;
       renderStatementMarkdown(markdown);
       statementStatus.hidden = true;
     } catch (error) {
+      if (request.signal.aborted || statementOverlay.hidden) return;
       console.warn('Could not load personal statement from GitHub:', error);
       statementStatus.textContent = 'The personal statement could not be loaded right now. Please use “View original on GitHub” below.';
+    } finally {
+      if (currentRequest === request) currentRequest = null;
     }
   });
-  statementClose.addEventListener('click', () => statementDialog.close());
-  statementDialog.addEventListener('click', event => {
-    // Close only when the shaded backdrop itself is clicked.
-    if (event.target === statementDialog) statementDialog.close();
+
+  statementClose.addEventListener('click', closeStatement);
+  statementOverlay.addEventListener('click', event => {
+    if (event.target === statementOverlay) closeStatement();
+  });
+  document.addEventListener('keydown', event => {
+    if (statementOverlay.hidden) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeStatement();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = [...statementDialog.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])')];
+    if (!focusable.length) {
+      event.preventDefault();
+      statementDialog.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === statementDialog)) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault(); first.focus();
+    }
   });
 }
