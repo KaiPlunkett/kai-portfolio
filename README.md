@@ -26,7 +26,8 @@ The existing `twine-campus-life-the-case-of-the-missing-locket` repository alrea
 - **Music**: four embedded MP3 previews pointing to existing files in `custom-created-music-tracks` (using the `raw.githubusercontent.com` URL), including the level success and level failure cues.
 - **Sound effects**: three M4A previews pointing to existing files in `sound-effects-library` (using the raw file URL).
 - **Header branding**: the site header now uses Kai's GitHub avatar (`https://github.com/KaiPlunkett.png`) as the top-left brand icon.
-- **Personal statement**: link to the public repository. **CV**: no direct link on the website; the Contact section asks visitors to email Kai to request a copy.
+- **Personal statement**: the About section now opens a modal styled like the rest of the website. It fetches the **latest** `README.md` from `KaiPlunkett/personal-statement` on `main` whenever opened (rather than embedding a copy), formats headings, paragraphs, lists and basic emphasis safely, and links to the source if the fetch fails. With JavaScript disabled, the button links to the GitHub README instead.
+- **CV**: no direct link on the website; the Contact section asks visitors to email Kai to request a copy.
 
 The audio links are real paths based on the repository filenames, **but runtime playback has not been verified**. For reliable media playback, copy selected files to `assets/audio/`, change each `<source src="...">` to the local path, then test Safari, Firefox and Chrome. Converting preview files to optimised MP3 may be helpful for compatibility. Keep the source repositories as the authoritative complete libraries and link to them from each media section. Do not upload huge uncompressed masters to the portfolio.
 
@@ -47,7 +48,7 @@ The audio links are real paths based on the repository filenames, **but runtime 
 index.html                 Main landing page
 projects/campus-life.html  Twine game case study
 assets/css/styles.css      Responsive visual theme
-assets/js/main.js          Filter controls + automatic copyright year
+assets/js/main.js          Filter controls + copyright year + GitHub README modal
 .nojekyll                  Prevent unintended Jekyll processing
 ```
 
@@ -56,3 +57,12 @@ assets/js/main.js          Filter controls + automatic copyright year
 - GitHub profile: https://github.com/KaiPlunkett
 - GitHub Pages guide: https://docs.github.com/en/pages/quickstart
 - GitHub Pages project/user sites: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
+
+## Live personal statement pop-up
+
+- Clicking **Read personal statement** in **About Me** opens the matching dark-themed dialog and fetches `https://raw.githubusercontent.com/KaiPlunkett/personal-statement/main/README.md` in the browser.
+- Changes committed to that README on `main` become visible the next time the pop-up opens; the portfolio itself does not need a new deployment.
+- The README must remain publicly accessible. If the repository, branch, or filename changes, update `statementSource` in `assets/js/main.js` and the source links in `index.html`.
+- The modal supports keyboard focus and Escape to close. Its contents are created with safe DOM text nodes, not raw HTML injection.
+- GitHub may temporarily rate-limit or fail; the modal displays an error message with a link to the original README. A network connection is needed to load the content.
+- For local preview, use a local web server rather than opening `file://` directly; test the remote README in Safari as well as Chrome.
