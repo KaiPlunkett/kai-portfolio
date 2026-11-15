@@ -75,3 +75,21 @@ assets/js/main.js          Filter controls + copyright year + GitHub README moda
 - Changed stylesheet and script URL references to `?v=5` on both pages, which helps Safari refresh its cached code after deployment.
 - Removed `01 / 04`, `MAKE IT INTERACTIVE` and the arrow caption below the hero audio waveform, preserving the waveform artwork and the text at its top. The waveform is made with HTML/CSS, not a separate raster image.
 - **To install:** Replace the contents of the Pages repository with everything from this ZIP's root (do not nest in a new directory), commit changes, and allow GitHub Pages to deploy. In Safari use **Option–Command–R** to reload without cache if an earlier version persists.
+
+## V6: waveform caption / caching verification
+
+The original minimalist homepage is unchanged, except for stronger protection against
+older, cached versions of the waveform caption. `index.html` contains no caption
+markup or text (`01 / 04`, `MAKE IT INTERACTIVE` or the bottom-right arrow).
+`styles.css` additionally hides any old `.art-caption` element if a browser loads
+a mismatched older HTML file. Assets now use `?v=6` to refresh Safari's cache.
+The Safari-compatible Personal Statement modal has **not** been changed.
+
+**Important:** Downloading or opening the new ZIP does not update files already
+published to GitHub Pages. Extract and upload its **contents** into the root of
+the portfolio GitHub Pages repository, replacing all files, and commit. If the
+text is still visible, use Safari View Source (`Option` + `Command` + `U`) and
+search for `MAKE IT INTERACTIVE` and `styles.css?v=6`. If the caption is in View
+Source or `v=6` is missing, the browser is opening an old page or the wrong
+published location. Check your GitHub Pages publishing branch and folder.
+Try a private browsing window or a forced reload after redeploying.

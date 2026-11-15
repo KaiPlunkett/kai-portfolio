@@ -35,3 +35,6 @@
 
 /* Explicit button control (rather than an external GitHub link). */
 .statement-trigger{cursor:pointer;font-family:inherit}
+
+/* V6: guarantee old pre-V5 caption content is invisible if HTML/CSS versions mix during caching. */
+.hero-art .art-caption, .hero-art .art-caption * { display: none !important; }
