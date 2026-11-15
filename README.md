@@ -24,7 +24,7 @@ The existing `twine-campus-life-the-case-of-the-missing-locket` repository alrea
 
 - **Game**: project site hosted from the game repository; linked from the portfolio case study.
 - **Music**: four embedded MP3 previews pointing to existing files in `custom-created-music-tracks` (using the `raw.githubusercontent.com` URL), including the level success and level failure cues.
-- **Sound effects**: five M4A previews pointing to existing files in `sound-effects-library` (using the raw file URL).
+- **Sound effects**: four M4A previews pointing to existing files in `sound-effects-library` (using the raw file URL).
 - **Header branding**: the site header now uses Kai's GitHub avatar (`https://github.com/KaiPlunkett.png`) as the top-left brand icon.
 - **Personal statement**: the About section now opens a Safari-compatible modal styled like the rest of the website. It fetches the **latest** `README.md` from `KaiPlunkett/personal-statement` on `main` whenever opened (rather than embedding a copy), formats headings, paragraphs, lists and basic emphasis safely, and links to the source if the fetch fails. The trigger is a real button, not an external link; with JavaScript disabled, a separate fallback GitHub link appears.
 - **CV**: no direct link on the website; the Contact section asks visitors to email Kai to request a copy.
@@ -121,3 +121,14 @@ Replaced the previous three-track SFX sample (which included Wind) with five por
 5. **Box dropping** — `Box Dropping V1.m4a` (physical object Foley)
 
 The selection was made from the real repo filename inventory for coverage of different game-sound use cases; the actual waveforms could not be auditioned or technically evaluated in this environment. Check playback and loudness on Mac Safari and iPhone Safari before publishing. CSS and JS are referenced with version `v=9` to reduce cache issues.
+
+## V10: Four sound effects in the portfolio
+
+Removed **Voices cutting through static** from the portfolio showcase (the original sound remains in the separate GitHub SFX repository). The four currently displayed samples, in order, are:
+
+1. Footsteps on wood
+2. Heartbeat
+3. Gasp
+4. Box dropping
+
+Track numbers are consecutively `01`–`04`, and both pages reference stylesheet and JavaScript `?v=10` for cache refresh. All V9 improvements are retained. The five-sample selection above under V9 is historical context, not the current displayed selection.
