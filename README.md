@@ -103,3 +103,9 @@ Try a private browsing window or a forced reload after redeploying.
 - Both pages reference CSS and JavaScript with `?v=7` to reduce stale mobile-Safari caching.
 - Content is still fetched **live from GitHub** whenever the dialog opens. If the README is later rewritten with manually wrapped lines, note that each non-empty line will be displayed as a separate paragraph; for the current README, this matches the authored paragraphs.
 - To deploy: replace the entire contents of the GitHub Pages publishing directory and commit. On an iPhone, close old Safari tabs, reopen the page, and verify all 11 paragraphs are separate and the modal scrolls to the end.
+
+## V8: GitHub contact button layout
+
+- Keep the 'Find me on GitHub' label and its arrow together on a single horizontal line in desktop Safari.
+- Scope the layout change to the contact section so the iPhone layout and other buttons remain unchanged.
+- Version the stylesheet and script references to `v=8` to reduce stale-cache issues after deployment.
