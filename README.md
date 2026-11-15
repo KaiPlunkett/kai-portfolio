@@ -1,1 +1,57 @@
-# kai-portfolio
+# Kai Plunkett — GitHub Pages portfolio starter
+
+A responsive, multi-section portfolio built in plain **HTML, CSS and JavaScript**, with a dedicated case study. No frameworks, subscriptions or build steps required.
+
+## Publish it on GitHub Pages
+
+1. In the **KaiPlunkett** account, create a **public** repo named **`kaiplunkett.github.io`** (GitHub treats the username as case-insensitive).
+2. Upload **the contents of this folder**, not the containing `kai-portfolio-starter` folder, to the root of the repository. Commit to `main`.
+3. Go to **Settings → Pages → Build and deployment**, choose **Deploy from a branch**. Select `main` and `/(root)`, then save.
+4. Wait for the deployment to finish and visit **`https://kaiplunkett.github.io/`**. This URL is a target URL, not a live site verified during creation.
+5. Check every button, audio player and link on desktop and mobile.
+
+## Publish the game as a separate project site
+
+The existing `twine-campus-life-the-case-of-the-missing-locket` repository already contains `index.html` and `resources/`.
+
+1. In **that** repository, navigate to **Settings → Pages** and select `main` / `/(root)` as the publishing source.
+2. Once deployed, verify the game URL is `https://kaiplunkett.github.io/twine-campus-life-the-case-of-the-missing-locket/`.
+3. Test it on another device and browser. **Make sure its image and audio references are relative to the game location**, e.g. `resources/image.webp`, rather than local machine paths or root-relative `/resources/image.webp`. Check names and capitalisation match exactly.
+4. The original README contains tutor evaluation and mentions broken external image paths. Replace that README's lead with a concise *project overview*, setup instructions, screenshots, Kai's individual contribution, tools and credits; the academic evaluation can be archived under documentation if he wants to retain it.
+5. Remove the "Setup reminder" paragraph on `projects/campus-life.html` when the demo is verified.
+
+## Where are the artefacts?
+
+- **Game**: project site hosted from the game repository; linked from the portfolio case study.
+- **Music**: three embedded MP3 previews pointing to existing files in `custom-created-music-tracks` (using the `raw.githubusercontent.com` URL).
+- **Sound effects**: three M4A previews pointing to existing files in `sound-effects-library` (using the raw file URL).
+- **CV and personal statement**: deep links to their public repositories.
+
+The audio links are real paths based on the repository filenames, **but runtime playback has not been verified**. For reliable media playback, copy selected files to `assets/audio/`, change each `<source src="...">` to the local path, then test Safari, Firefox and Chrome. Converting preview files to optimised MP3 may be helpful for compatibility. Keep the source repositories as the authoritative complete libraries and link to them from each media section. Do not upload huge uncompressed masters to the portfolio.
+
+## Improve the site before showing it to universities or employers
+
+- Replace the styled mock game art on the homepage and case study with **actual gameplay captures**. Use 16:9 WEBP thumbnails (where suitable) and descriptive alt text.
+- Add a **30–60 second gameplay video** and a **short game-audio showreel** once produced. YouTube/Vimeo embeds reduce hosting bandwidth.
+- Rewrite the case study's placeholder reflection **in Kai's own words**. Make it clear what he personally made, especially if it was a group project. The README was used as an information source, not treated as independent evidence of all claims.
+- Provide a clean **PDF CV** with sensitive personal information removed or intentionally selected for public sharing; the existing public CV repo contains direct contact details. Use a professional contact method on the live site, not a home address or personal phone number.
+- Verify copyright permissions for music, samples, game screenshots and external assets; credit teammates and sources appropriately.
+- If targeting **Audio Programmer** roles, add a future project showing a small audio system in Unity/Unreal with FMOD or Wwise, an annotated code snippet and a short video. Don't claim those skills until demonstrated.
+- Edit `index.html`, `projects/campus-life.html`, and `assets/css/styles.css` to personalise copy, layout and colour.
+- Add appropriate accessible focus styles, subtitles/captions on video, and user-controlled audio (this starter has no auto-play).
+
+## Files
+
+```text
+index.html                 Main landing page
+projects/campus-life.html  Twine game case study
+assets/css/styles.css      Responsive visual theme
+assets/js/main.js          Filter controls + automatic copyright year
+.nojekyll                  Prevent unintended Jekyll processing
+```
+
+## Sources
+
+- GitHub profile: https://github.com/KaiPlunkett
+- GitHub Pages guide: https://docs.github.com/en/pages/quickstart
+- GitHub Pages project/user sites: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
