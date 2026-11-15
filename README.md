@@ -23,9 +23,10 @@ The existing `twine-campus-life-the-case-of-the-missing-locket` repository alrea
 ## Where are the artefacts?
 
 - **Game**: project site hosted from the game repository; linked from the portfolio case study.
-- **Music**: three embedded MP3 previews pointing to existing files in `custom-created-music-tracks` (using the `raw.githubusercontent.com` URL).
+- **Music**: four embedded MP3 previews pointing to existing files in `custom-created-music-tracks` (using the `raw.githubusercontent.com` URL), including the level success and level failure cues.
 - **Sound effects**: three M4A previews pointing to existing files in `sound-effects-library` (using the raw file URL).
-- **CV and personal statement**: deep links to their public repositories.
+- **Header branding**: the site header now uses Kai's GitHub avatar (`https://github.com/KaiPlunkett.png`) as the top-left brand icon.
+- **Personal statement**: link to the public repository. **CV**: no direct link on the website; the Contact section asks visitors to email Kai to request a copy.
 
 The audio links are real paths based on the repository filenames, **but runtime playback has not been verified**. For reliable media playback, copy selected files to `assets/audio/`, change each `<source src="...">` to the local path, then test Safari, Firefox and Chrome. Converting preview files to optimised MP3 may be helpful for compatibility. Keep the source repositories as the authoritative complete libraries and link to them from each media section. Do not upload huge uncompressed masters to the portfolio.
 
@@ -34,7 +35,7 @@ The audio links are real paths based on the repository filenames, **but runtime 
 - Replace the styled mock game art on the homepage and case study with **actual gameplay captures**. Use 16:9 WEBP thumbnails (where suitable) and descriptive alt text.
 - Add a **30–60 second gameplay video** and a **short game-audio showreel** once produced. YouTube/Vimeo embeds reduce hosting bandwidth.
 - Rewrite the case study's placeholder reflection **in Kai's own words**. Make it clear what he personally made, especially if it was a group project. The README was used as an information source, not treated as independent evidence of all claims.
-- Provide a clean **PDF CV** with sensitive personal information removed or intentionally selected for public sharing; the existing public CV repo contains direct contact details. Use a professional contact method on the live site, not a home address or personal phone number.
+- The CV link has been removed from the homepage, but the existing public CV repository may still be discoverable directly through GitHub. If the CV is intended to be shared only on request, review its repository visibility. Add a suitable contact email to the website before publishing; no email address has been assumed or added. Never publicly expose a home address or personal phone number.
 - Verify copyright permissions for music, samples, game screenshots and external assets; credit teammates and sources appropriately.
 - If targeting **Audio Programmer** roles, add a future project showing a small audio system in Unity/Unreal with FMOD or Wwise, an annotated code snippet and a short video. Don't claim those skills until demonstrated.
 - Edit `index.html`, `projects/campus-life.html`, and `assets/css/styles.css` to personalise copy, layout and colour.
