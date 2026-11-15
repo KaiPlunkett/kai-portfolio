@@ -63,9 +63,19 @@ function renderStatementMarkdown(markdown) {
 
   function flushParagraph() {
     if (!paragraph.length) return;
-    const p = document.createElement('p');
-    appendInline(p, paragraph.join('\n'));
-    statementContent.append(p);
+    // Kai's README stores each actual paragraph on its own physical line,
+    // sometimes with only a single newline between paragraphs. Joining these
+    // lines creates one huge paragraph, particularly noticeable in iOS Safari.
+    // Render each source paragraph as a real <p>, not as collapsed whitespace.
+    paragraph.forEach((sourceParagraph, index) => {
+      const p = document.createElement('p');
+      if (index === 0 && statementContent.lastElementChild?.tagName === 'P') {
+        // A blank Markdown line separated this group from the previous one.
+        p.classList.add('statement-section-start');
+      }
+      appendInline(p, sourceParagraph);
+      statementContent.append(p);
+    });
     paragraph = [];
   }
 

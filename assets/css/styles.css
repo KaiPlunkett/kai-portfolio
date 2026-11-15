@@ -38,3 +38,12 @@
 
 /* V6: guarantee old pre-V5 caption content is invisible if HTML/CSS versions mix during caching. */
 .hero-art .art-caption, .hero-art .art-caption * { display: none !important; }
+
+/* V7: genuine paragraph elements in the live README, including on iOS Safari. */
+.statement-copy p{white-space:normal;margin:0 0 18px;overflow-wrap:break-word}
+.statement-copy p.statement-section-start{margin-top:26px}
+/* Keep a long README scrollable below the fixed modal header on narrow devices. */
+.statement-dialog{display:flex;flex-direction:column;min-height:0}
+.statement-dialog-shell{width:100%;min-height:0}
+.statement-dialog-scroll{flex:1 1 auto;min-height:0;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+@media(max-width:650px){.statement-copy{font-size:16px;line-height:1.7;-webkit-text-size-adjust:100%;text-size-adjust:100%}.statement-copy p{margin-bottom:18px}.statement-copy p.statement-section-start{margin-top:25px}}
